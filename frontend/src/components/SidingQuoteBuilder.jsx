@@ -760,10 +760,16 @@ export default function SidingQuoteBuilder() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center">
-                <Calculator className="w-5 h-5 text-white" />
+                <svg className="w-6 h-6" viewBox="0 0 100 100" fill="white">
+                  <rect x="20" y="45" width="60" height="45" rx="4"/>
+                  <path d="M50 12 L88 45 L12 45 Z"/>
+                  <rect x="25" y="52" width="50" height="4" rx="2" fill="#0891b2"/>
+                  <rect x="25" y="64" width="50" height="4" rx="2" fill="#0891b2"/>
+                  <rect x="25" y="76" width="50" height="4" rx="2" fill="#0891b2"/>
+                </svg>
               </div>
               <div>
-                <h1 className="text-xl font-bold text-white font-display">Siding Quote Builder</h1>
+                <h1 className="text-xl font-bold text-white font-display">Siding Buddy</h1>
               </div>
             </div>
 

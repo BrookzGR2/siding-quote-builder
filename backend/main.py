@@ -1,5 +1,5 @@
 """
-Siding Quote Builder - FastAPI Backend
+Siding Buddy - FastAPI Backend
 """
 import os
 import tempfile
@@ -12,7 +12,7 @@ from hover_parser import parse_hover_pdf, HoverMeasurements
 from quote_calculator import calculate_quote, QuoteInput, QuoteResult, SIDING_PRODUCTS
 
 app = FastAPI(
-    title="Siding Quote Builder API",
+    title="Siding Buddy API",
     description="API for parsing Hover PDFs and calculating siding quotes",
     version="1.0.0"
 )
@@ -30,7 +30,7 @@ app.add_middleware(
 @app.get("/api/health")
 async def health_check():
     """Health check endpoint"""
-    return {"status": "healthy", "service": "siding-quote-api"}
+    return {"status": "healthy", "service": "siding-buddy-api"}
 
 
 @app.get("/api/products")
