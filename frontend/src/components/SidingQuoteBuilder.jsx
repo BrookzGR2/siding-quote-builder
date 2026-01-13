@@ -10,7 +10,7 @@ import { InternalQuotePDF, CustomerQuotePDF } from './QuotePDF';
 // CONSTANTS & CONFIG
 // ============================================================================
 
-const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:8002';
+const API_BASE = process.env.REACT_APP_API_URL || '';
 
 const MASTIC_COLORS = {
   neutrals: [
@@ -650,7 +650,8 @@ export default function SidingQuoteBuilder() {
       });
 
       if (!response.ok) {
-        throw new Error('Failed to parse PDF');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.detail || 'Failed to parse PDF');
       }
 
       const measurements = await response.json();
@@ -739,6 +740,10 @@ export default function SidingQuoteBuilder() {
   const handleFileSelect = useCallback(async (e) => {
     const file = e.target.files[0];
     if (file) {
+      if (!file.name.toLowerCase().endsWith('.pdf')) {
+        setParseError('Please select a PDF file');
+        return;
+      }
       await processFile(file);
     }
   }, [processFile]);
