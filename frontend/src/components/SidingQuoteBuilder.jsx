@@ -627,36 +627,10 @@ export default function SidingQuoteBuilder() {
     } finally {
       setIsExporting(false);
     }
-  }, [viewMode, customerName, propertyAddress, sidingProduct, sidingProfile, sidingColor, g8Color, totals, generateLineItems, getColorHex, getG8ColorHex]);
+  }, [viewMode, customerName, propertyAddress, sidingProduct, sidingProfile, sidingColor, g8Color, totals, generateLineItems, getColorHex, getG8ColorHex, isMilitary, payWithCheck]);
 
-  // PDF upload handlers
-  const handleDragOver = useCallback((e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  }, []);
-
-  const handleDragLeave = useCallback((e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  }, []);
-
-  const handleDrop = useCallback(async (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-    const file = e.dataTransfer.files[0];
-    if (file && file.type === 'application/pdf') {
-      await processFile(file);
-    }
-  }, []);
-
-  const handleFileSelect = useCallback(async (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      await processFile(file);
-    }
-  }, []);
-
-  const processFile = async (file) => {
+  // PDF file processor (defined first for use in handlers)
+  const processFile = useCallback(async (file) => {
     setUploadedFile(file);
     setIsProcessing(true);
     setParseError(null);
@@ -740,7 +714,34 @@ export default function SidingQuoteBuilder() {
     } finally {
       setIsProcessing(false);
     }
-  };
+  }, [pdfObjectUrl]);
+
+  // PDF upload handlers
+  const handleDragOver = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  }, []);
+
+  const handleDragLeave = useCallback((e) => {
+    e.preventDefault();
+    setIsDragging(false);
+  }, []);
+
+  const handleDrop = useCallback(async (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files[0];
+    if (file && file.type === 'application/pdf') {
+      await processFile(file);
+    }
+  }, [processFile]);
+
+  const handleFileSelect = useCallback(async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      await processFile(file);
+    }
+  }, [processFile]);
 
   // ============================================================================
   // RENDER

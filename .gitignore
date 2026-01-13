@@ -29,3 +29,4 @@ Thumbs.db
 
 # Task plans (local only)
 tasks/
+.vercel
